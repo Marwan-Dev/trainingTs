@@ -1,1 +1,1 @@
-console.log("Hello World Marwan");
+console.log('Hello World Marwan');

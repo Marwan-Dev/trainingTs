@@ -3,8 +3,10 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { rateLimit } from 'express-rate-limit';
 import errorMiddleware from './middlewares/error.middleware';
+import config from './config';
+import db from './database';
 
-const PORT = 3000;
+const PORT = config.port || 3000;
 
 // Create Instance Server
 const app: Application = express();
@@ -37,6 +39,19 @@ app.post('/', (req: Request, res: Response) => {
     message: 'Hello World from Post Request',
     data: req.body,
   });
+});
+
+db.connect().then((client) => {
+  return client
+    .query('SELECT NOW()')
+    .then((res) => {
+      client.release();
+      console.log(res.rows);
+    })
+    .catch((err) => {
+      client.release();
+      console.log(err.stack);
+    });
 });
 
 // Error Middleware

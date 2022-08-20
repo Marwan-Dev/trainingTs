@@ -1,0 +1,18 @@
+{
+  "name": "trainingTs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Marwan-Dev/trainingTs.git",
+  "author": "Marwan Mostafa <74471326+Marwan-Dev@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  }
+}

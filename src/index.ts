@@ -2,6 +2,8 @@ import express, { Application, Request, Response } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { rateLimit } from 'express-rate-limit';
+import errorMiddleware from './middlewares/error.middleware';
+
 const PORT = 3000;
 
 // Create Instance Server
@@ -24,6 +26,7 @@ app.use(
 app.use(helmet());
 // Routing for / path
 app.get('/', (req: Request, res: Response) => {
+  throw new Error('Error Exists');
   res.json({
     message: 'Hello World',
   });
@@ -33,6 +36,15 @@ app.post('/', (req: Request, res: Response) => {
   res.json({
     message: 'Hello World from Post Request',
     data: req.body,
+  });
+});
+
+// Error Middleware
+app.use(errorMiddleware);
+// handle route not exist
+app.use((_req: Request, res: Response) => {
+  res.status(404).json({
+    message: 'You are lost, Please check API docs.',
   });
 });
 // Start Express Server

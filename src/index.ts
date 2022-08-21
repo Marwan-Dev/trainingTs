@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { rateLimit } from 'express-rate-limit';
 import errorMiddleware from './middlewares/error.middleware';
 import config from './config';
+import routes from './routes';
 import db from './database';
 
 const PORT = config.port || 3000;
@@ -26,20 +27,21 @@ app.use(
 );
 // HTTP request security middleware
 app.use(helmet());
+
+app.use('/api', routes);
 // Routing for / path
 app.get('/', (req: Request, res: Response) => {
-  throw new Error('Error Exists');
   res.json({
     message: 'Hello World',
   });
 });
 // Post request
-app.post('/', (req: Request, res: Response) => {
-  res.json({
-    message: 'Hello World from Post Request',
-    data: req.body,
-  });
-});
+// app.post('/', (req: Request, res: Response) => {
+//   res.json({
+//     message: 'Hello World from Post Request',
+//     data: req.body,
+//   });
+// });
 
 // db.connect().then((client) => {
 //   return client
